@@ -24,3 +24,15 @@ export async function getCartItems(): Promise<CartItem[]> {
   if (error) throw error;
   return (data ?? []) as unknown as CartItem[];
 }
+
+export async function getCartCount(): Promise<number> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return 0;
+
+  const { data, error } = await supabase.from("cart_items").select("quantity");
+  if (error) throw error;
+  return (data ?? []).reduce((sum, row) => sum + row.quantity, 0);
+}

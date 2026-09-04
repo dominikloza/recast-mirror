@@ -4,7 +4,9 @@ import { MirrorPeak } from "./mirror-peak";
 import { RangeItemCartButton } from "./range-item-cart-button";
 import { ScrollcraftMount } from "./scrollcraft-mount";
 import { formatPrice, getProductBySlug, getProducts } from "@/lib/products";
+import { getCartCount } from "@/lib/cart";
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 // Presentation-only copy for the Range grid — the DB holds the long-form
 // product description shown on /product/[slug]; this page's cards want
@@ -32,10 +34,11 @@ const RANGE_BLURB: Record<string, string> = {
 
 export default async function Home() {
   const supabase = await createClient();
-  const [{ data: { user } }, mirrorProduct, allProducts] = await Promise.all([
+  const [{ data: { user } }, mirrorProduct, allProducts, cartCount] = await Promise.all([
     supabase.auth.getUser(),
     getProductBySlug("echo-hoodie"),
     getProducts(),
+    getCartCount(),
   ]);
 
   const rangeProducts = RANGE_ORDER.map((slug) =>
@@ -56,6 +59,51 @@ export default async function Home() {
           <a href="#ch-04" data-folio data-title="04 &middot; Range" aria-label="Chapter 4, Range">04</a>
           <a href="#ch-05" data-folio data-title="05 &middot; Commitment" aria-label="Chapter 5, Commitment">05</a>
         </div>
+      </nav>
+
+      <nav
+        aria-label="Shop"
+        style={{
+          position: "fixed",
+          top: "var(--sc-4)",
+          right: "var(--sc-4)",
+          zIndex: "var(--sc-z-chrome)",
+          display: "flex",
+          alignItems: "center",
+          gap: "var(--sc-3)",
+          background: "color-mix(in oklab, var(--sc-canvas) 78%, transparent)",
+          backdropFilter: "blur(8px)",
+          padding: "10px 14px",
+          borderRadius: "var(--sc-r-pill)",
+          fontFamily: "var(--sc-font-text)",
+          fontSize: "var(--sc-t-xs)",
+          letterSpacing: "var(--sc-track-wide)",
+          textTransform: "uppercase",
+        }}
+      >
+        <Link href="/shop" style={{ color: "var(--sc-ink-soft)" }}>Shop</Link>
+        <Link href="/cart" style={{ color: "var(--sc-ink-soft)", position: "relative" }}>
+          Cart
+          {cartCount > 0 && (
+            <span
+              style={{
+                marginLeft: 6,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: 16,
+                height: 16,
+                borderRadius: 999,
+                background: "var(--sc-accent)",
+                color: "var(--sc-accent-ink)",
+                fontSize: 10,
+                fontWeight: 700,
+              }}
+            >
+              {cartCount}
+            </span>
+          )}
+        </Link>
       </nav>
 
       <main id="top">
