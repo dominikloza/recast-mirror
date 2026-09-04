@@ -15,28 +15,32 @@ export function ShopHeader({
       </Link>
 
       <nav className="flex items-center gap-5 text-xs font-semibold uppercase tracking-wide">
-        <Link href="/shop" className="text-ink-muted hover:text-ink">
+        <Link href="/shop" className="nav-link">
           Shop
         </Link>
 
         {isLoggedIn ? (
           <>
-            <Link href="/orders" className="text-ink-muted hover:text-ink">
+            <Link href="/orders" className="nav-link">
               My Orders
             </Link>
             <form action={signOut}>
-              <button type="submit" className="text-ink-muted hover:text-ink">
+              <button type="submit" className="nav-link">
                 Sign out
               </button>
             </form>
           </>
         ) : (
-          <Link href="/login" className="text-ink-muted hover:text-ink">
+          <Link href="/login" className="nav-link">
             Sign in
           </Link>
         )}
 
-        <Link href="/cart" className="relative flex items-center" aria-label="Cart">
+        <Link
+          href="/cart"
+          className="relative flex items-center text-ink transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:text-lime"
+          aria-label="Cart"
+        >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M6 8h12l-1 13H7L6 8Z" />
             <path d="M9 8V6a3 3 0 0 1 6 0v2" />

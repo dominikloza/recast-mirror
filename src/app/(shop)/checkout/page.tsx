@@ -3,6 +3,7 @@ import { getCartItems } from "@/lib/cart";
 import { formatPrice } from "@/lib/products";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { PlaceOrderButton } from "./place-order-button";
 
 export default async function CheckoutPage() {
   const supabase = await createClient();
@@ -51,12 +52,7 @@ export default async function CheckoutPage() {
           </p>
 
           <form action={placeOrder}>
-            <button
-              type="submit"
-              className="w-full rounded-[3px] bg-lime px-6 py-4 text-sm font-bold uppercase tracking-wide text-lime-ink"
-            >
-              Place Order — {formatPrice(total)}
-            </button>
+            <PlaceOrderButton label={`Place Order — ${formatPrice(total)}`} />
           </form>
         </div>
 

@@ -28,7 +28,10 @@ export async function addToCart(productId: string) {
       .insert({ user_id: user.id, product_id: productId, quantity: 1 });
   }
 
-  revalidatePath("/cart");
+  // "layout" also busts (shop)/layout.tsx, which is where the header's
+  // cart-count badge is fetched — without it the badge only catches up
+  // on the next full navigation, not this one.
+  revalidatePath("/cart", "layout");
 }
 
 export async function setCartQuantity(cartItemId: string, quantity: number) {
@@ -41,5 +44,5 @@ export async function setCartQuantity(cartItemId: string, quantity: number) {
       .update({ quantity })
       .eq("id", cartItemId);
   }
-  revalidatePath("/cart");
+  revalidatePath("/cart", "layout");
 }

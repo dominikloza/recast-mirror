@@ -31,7 +31,7 @@ export function AddToCartButton({
     <button
       onClick={handleClick}
       disabled={isPending}
-      className="w-full rounded-[3px] bg-lime px-5 py-3 text-xs font-bold tracking-wide text-lime-ink uppercase transition-opacity disabled:opacity-60"
+      className="btn-lift w-full rounded-[3px] bg-lime px-5 py-3 text-xs font-bold tracking-wide text-lime-ink uppercase transition-opacity disabled:opacity-60"
     >
       {added ? "Added ✓" : isPending ? "Adding…" : "Add to Cart"}
     </button>

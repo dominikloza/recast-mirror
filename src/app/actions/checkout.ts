@@ -3,6 +3,7 @@
 import { getCartItems } from "@/lib/cart";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 // No payment processor behind this on purpose (see BRIEF: mocked
 // checkout). Placing an order writes it as already "paid" and clears
@@ -43,6 +44,11 @@ export async function placeOrder() {
   if (itemsError) throw itemsError;
 
   await supabase.from("cart_items").delete().eq("user_id", user.id);
+
+  // Bust the shared (shop) layout too, so the header's cart-count badge
+  // reflects the now-empty cart on the very next page it renders,
+  // instead of only after a separate reload.
+  revalidatePath("/", "layout");
 
   redirect(`/orders/${order.id}`);
 }

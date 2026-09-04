@@ -51,3 +51,45 @@ h1, h2, h3, .display {
   letter-spacing: 0.01em;
   margin: 0;
 }
+
+/* Full-contrast by default (was --ink-muted, which reads as too pale for
+   nav labels people actually need to read at a glance) — the underline
+   sliding in on hover carries the "interactive" cue instead of relying on
+   a lighter text color to imply it. */
+.nav-link {
+  position: relative;
+  color: var(--ink);
+  padding-bottom: 2px;
+  transition: color 150ms ease-out;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: right 200ms ease-out;
+}
+.nav-link:hover {
+  color: var(--lime-ink);
+}
+.nav-link:hover::after {
+  right: 0;
+  background: var(--lime);
+}
+
+/* Shared hover/press treatment for primary buttons across the shop —
+   one motion language instead of each button inventing its own. */
+.btn-lift {
+  transition: transform 150ms ease-out, box-shadow 150ms ease-out;
+}
+.btn-lift:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px -6px color-mix(in oklab, var(--ink) 30%, transparent);
+}
+.btn-lift:active:not(:disabled) {
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+}

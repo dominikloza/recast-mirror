@@ -34,7 +34,7 @@ export default async function CartPage() {
             <p className="text-sm text-ink-muted">Your cart is empty.</p>
             <Link
               href="/shop"
-              className="w-fit rounded-[3px] bg-lime px-6 py-3 text-xs font-bold uppercase tracking-wide text-lime-ink"
+              className="btn-lift w-fit rounded-[3px] bg-lime px-6 py-3 text-xs font-bold uppercase tracking-wide text-lime-ink"
             >
               Browse the range
             </Link>
@@ -81,7 +81,7 @@ export default async function CartPage() {
 
             <Link
               href="/checkout"
-              className="w-full rounded-[3px] bg-lime px-6 py-4 text-center text-sm font-bold uppercase tracking-wide text-lime-ink"
+              className="btn-lift w-full rounded-[3px] bg-lime px-6 py-4 text-center text-sm font-bold uppercase tracking-wide text-lime-ink"
             >
               Checkout
             </Link>
