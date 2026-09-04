@@ -1,5 +1,6 @@
 import { AddToCartButton } from "@/components/add-to-cart-button";
-import { formatPrice, getProductBySlug } from "@/lib/products";
+import { FittingRoom } from "@/components/fitting-room";
+import { formatPrice, getProductBySlug, getVtonCategory } from "@/lib/products";
 import { createClient } from "@/lib/supabase/server";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -51,6 +52,14 @@ export default async function ProductPage({
           </p>
 
           <AddToCartButton productId={product.id} isLoggedIn={!!user} />
+
+          {product.image_url && getVtonCategory(product.category) && (
+            <FittingRoom
+              slug={product.slug}
+              name={product.name}
+              imageUrl={product.image_url}
+            />
+          )}
         </div>
       </div>
     </main>

@@ -36,3 +36,17 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 export function formatPrice(cents: number): string {
   return `$${(cents / 100).toFixed(0)}`;
 }
+
+// IDM-VTON only knows how to place a garment on a torso or legs — cap,
+// bag, socks and sunglasses aren't garments in that sense, so those
+// categories get no fitting-room UI at all rather than a nonsense result.
+const VTON_CATEGORY: Record<string, "upper_body" | "lower_body"> = {
+  Hoodie: "upper_body",
+  Jacket: "upper_body",
+  Tee: "upper_body",
+  Pants: "lower_body",
+};
+
+export function getVtonCategory(category: string): "upper_body" | "lower_body" | null {
+  return VTON_CATEGORY[category] ?? null;
+}
