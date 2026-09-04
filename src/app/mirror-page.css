@@ -1,0 +1,260 @@
+  :root {
+    --sc-canvas:     #17140F;
+    --sc-surface:    #211C15;
+    --sc-ink:        #F4F0E6;
+    --sc-ink-soft:   #9C9585;
+    --sc-accent:     #C6F542;
+    --sc-accent-ink: #16220A;
+    --sc-font-display: "Anton", system-ui, sans-serif;
+    --sc-font-text:    "Space Grotesk", system-ui, sans-serif;
+  }
+
+  h1, h2, h3 { text-transform: uppercase; }
+  .sc-display { font-weight: 400; }
+
+  /* ---- folio nav: the chaptered-editorial chrome, not a site bar ---- */
+  .folio {
+    position: fixed; left: var(--sc-4); bottom: var(--sc-4);
+    z-index: var(--sc-z-chrome);
+    display: flex; flex-direction: column; gap: 6px;
+    font-family: var(--sc-font-text); font-size: var(--sc-t-xs);
+    letter-spacing: var(--sc-track-wide); text-transform: uppercase;
+    background: color-mix(in oklab, var(--sc-canvas) 78%, transparent);
+    backdrop-filter: blur(8px);
+    padding: 10px 14px;
+    border-radius: var(--sc-r-pill);
+  }
+  .folio__title { color: var(--sc-ink); font-size: 10px; opacity: 0.85; }
+  .folio__nums { display: flex; gap: var(--sc-3); }
+  .folio a {
+    color: var(--sc-ink-soft); text-decoration: none;
+    transition: color var(--sc-d-base) var(--sc-ease-out);
+  }
+  .folio a.is-current { color: var(--sc-accent); }
+  @media (max-width: 860px) { .folio { display: none; } }
+
+  /* ---- prologue: title page, lead-anchored, never centred. A held, empty-
+     room backdrop sits behind the type (a deliberate departure from the
+     grammar's default no-media hero, at the client's request) with a scrim
+     so the type stays clear of it rather than fighting it. ---- */
+  .prologue {
+    position: relative;
+    min-height: 100vh; min-height: 100svh;
+    display: flex; align-items: center;
+    padding: var(--sc-8) var(--sc-gutter);
+    background: var(--sc-canvas) url('/00-hero-poster.webp') center/cover no-repeat;
+    overflow: hidden;
+  }
+  .prologue__bg {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.55;
+  }
+  /* reduced motion: hide the loop, the poster set on .prologue shows through */
+  @media (prefers-reduced-motion: reduce) { .prologue__bg { display: none; } }
+  .prologue__scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg,
+      color-mix(in oklab, var(--sc-canvas) 96%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 88%, transparent) 38%,
+      color-mix(in oklab, var(--sc-canvas) 55%, transparent) 62%,
+      color-mix(in oklab, var(--sc-canvas) 30%, transparent) 100%);
+  }
+  .prologue__fade {
+    position: absolute; left: 0; right: 0; bottom: 0; height: min(22vh, 220px);
+    background: linear-gradient(to bottom, transparent, var(--sc-canvas));
+    pointer-events: none;
+  }
+  .prologue__inner { position: relative; z-index: 2; max-width: 58rem; }
+  .prologue .sc-display { font-size: var(--sc-t-4xl); line-height: var(--sc-leading-none); letter-spacing: var(--sc-track-tight); }
+  .prologue p { color: var(--sc-ink-soft); font-size: var(--sc-t-lg); max-width: 34ch; margin-top: var(--sc-5); }
+
+  /* ---- chapter: hard-cut ground, folio label, asymmetric spread ---- */
+  .chapter { background: var(--sc-canvas); }
+  .chapter--surface { background: var(--sc-surface); }
+  .chapter__label {
+    font-family: var(--sc-font-text); font-size: var(--sc-t-xs);
+    letter-spacing: var(--sc-track-wide); text-transform: uppercase;
+    color: var(--sc-ink-soft);
+  }
+  .spread {
+    display: grid; grid-template-columns: 1fr 1fr; gap: var(--sc-9);
+    align-items: center;
+  }
+  .spread--reverse { grid-template-columns: 1fr 1fr; }
+  .spread--reverse .spread__media { order: 2; }
+  .spread--reverse .spread__text { order: 1; }
+  @media (max-width: 860px) {
+    .spread { grid-template-columns: 1fr; gap: var(--sc-7); }
+    .spread--reverse .spread__media,
+    .spread--reverse .spread__text { order: initial; }
+  }
+  .spread__text .sc-display { font-size: var(--sc-t-3xl); margin-top: var(--sc-5); }
+  .lines p { font-size: var(--sc-t-lg); color: var(--sc-ink); margin: 0; }
+  .lines p + p { margin-top: var(--sc-2); }
+  .lines p:last-child { color: var(--sc-ink-soft); margin-top: var(--sc-5); font-size: var(--sc-t-base); max-width: var(--sc-measure); }
+
+  figure.framed { margin: 0; }
+  figure.framed img { width: 100%; height: auto; border-radius: var(--sc-r-md); }
+  figure.framed figcaption {
+    margin-top: var(--sc-3); font-size: var(--sc-t-xs); color: var(--sc-ink-soft);
+    letter-spacing: var(--sc-track-normal);
+  }
+
+  /* ---- chapter 02: the mirror. the peak. ---- */
+  .mirror-stage {
+    min-height: 100vh; min-height: 100svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: var(--sc-7);
+    padding: var(--sc-8) var(--sc-gutter);
+  }
+  .mirror-stage__head { max-width: 40rem; text-align: left; align-self: flex-start; margin-inline: auto; width: 100%; max-width: 64rem; }
+  .mirror-stage__head .sc-display { font-size: var(--sc-t-3xl); }
+  .mirror-stage__head p { color: var(--sc-ink-soft); font-size: var(--sc-t-base); margin-top: var(--sc-3); max-width: 44ch; }
+
+  .mirror {
+    position: relative;
+    width: min(30rem, 90vw); height: min(38rem, 78vh);
+    border-radius: var(--sc-r-lg);
+    background: var(--sc-surface);
+    overflow: hidden;
+    box-shadow: var(--sc-e3);
+  }
+  .mirror__bracket {
+    position: absolute; width: 22px; height: 22px; z-index: 5; pointer-events: none;
+    border-color: var(--sc-accent); border-style: solid; border-width: 0;
+  }
+  .mirror__bracket--tl { top: 18px; left: 18px; border-top-width: 2.5px; border-left-width: 2.5px; }
+  .mirror__bracket--tr { top: 18px; right: 18px; border-top-width: 2.5px; border-right-width: 2.5px; }
+  .mirror__bracket--bl { bottom: 18px; left: 18px; border-bottom-width: 2.5px; border-left-width: 2.5px; }
+  .mirror__bracket--br { bottom: 18px; right: 18px; border-bottom-width: 2.5px; border-right-width: 2.5px; }
+
+  .mirror__panel { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sc-5); text-align: center; padding: var(--sc-6); }
+  .mirror__panel[hidden] { display: none; }
+
+  .mirror label.dropzone {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sc-5);
+    border: 2px dashed color-mix(in oklab, var(--sc-ink) 22%, transparent);
+    border-radius: var(--sc-r-lg);
+    cursor: pointer;
+  }
+  .mirror input[type="file"] { position: absolute; width: 1px; height: 1px; opacity: 0; }
+  .mirror__shutter {
+    width: 68px; height: 68px; border-radius: 50%;
+    background: var(--sc-accent);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .mirror__shutter svg { width: 28px; height: 28px; }
+  .mirror__hint { color: var(--sc-ink-soft); font-size: var(--sc-t-sm); max-width: 20ch; }
+  .mirror__hint strong { color: var(--sc-ink); font-weight: 600; display: block; font-size: var(--sc-t-base); margin-bottom: var(--sc-1); }
+
+  .mirror__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .mirror__scan {
+    position: absolute; left: 0; right: 0; height: 2px; z-index: 3;
+    background: linear-gradient(90deg, transparent, var(--sc-accent), transparent);
+    animation: mirror-scan 1.8s linear infinite;
+  }
+  @keyframes mirror-scan { 0% { transform: translateY(-10%); } 100% { transform: translateY(3800%); } }
+  .mirror__spin { animation: mirror-spin 1.6s linear infinite; }
+  @keyframes mirror-spin { to { transform: rotate(360deg); } }
+  .mirror__processing-label { color: var(--sc-ink); font-weight: 600; letter-spacing: var(--sc-track-wide); text-transform: uppercase; font-size: var(--sc-t-sm); animation: mirror-pulse 1.1s ease-in-out infinite; }
+  @keyframes mirror-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .mirror__tint { position: absolute; inset: 0; background: var(--sc-accent); mix-blend-mode: color; opacity: 0.28; z-index: 2; }
+  .mirror__badge {
+    position: absolute; top: 18px; left: 50%; translate: -50% 0; z-index: 5;
+    background: var(--sc-accent); color: var(--sc-accent-ink);
+    font-size: var(--sc-t-xs); font-weight: 700; letter-spacing: var(--sc-track-wide);
+    padding: 6px 14px; border-radius: var(--sc-r-pill);
+  }
+  .mirror__sheet {
+    position: absolute; left: 0; right: 0; bottom: 0; z-index: 4;
+    background: linear-gradient(to top, color-mix(in oklab, var(--sc-canvas) 92%, transparent), transparent);
+    padding: var(--sc-6) var(--sc-5) var(--sc-5);
+    display: flex; flex-direction: column; gap: var(--sc-3);
+  }
+  .mirror__sheet-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sc-3); }
+  .mirror__sheet-row strong { display: block; font-size: var(--sc-t-sm); font-weight: 700; }
+  .mirror__sheet-row span { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); }
+  .mirror__pill { background: color-mix(in oklab, var(--sc-ink) 12%, transparent); font-size: var(--sc-t-xs); font-weight: 600; padding: 5px 11px; border-radius: var(--sc-r-pill); white-space: nowrap; }
+  .mirror__actions { display: flex; gap: var(--sc-2); }
+  .mirror__btn {
+    font-family: inherit; font-size: var(--sc-t-xs); font-weight: 700; letter-spacing: var(--sc-track-normal);
+    text-transform: uppercase; border-radius: var(--sc-r-sm); border: none; padding: 12px 16px; cursor: pointer;
+  }
+  .mirror__btn--primary { background: var(--sc-accent); color: var(--sc-accent-ink); flex: 1; }
+  .mirror__btn--ghost { background: color-mix(in oklab, var(--sc-ink) 12%, transparent); color: var(--sc-ink); }
+
+  .mirror-note { color: var(--sc-ink-soft); font-size: var(--sc-t-xs); text-align: center; max-width: 26ch; }
+
+  /* ---- chapter 04: range grid ---- */
+  .range-head { margin-bottom: var(--sc-8); max-width: 40rem; }
+  .range-head .sc-display { font-size: var(--sc-t-3xl); margin-top: var(--sc-5); }
+  .range-head p { color: var(--sc-ink-soft); margin-top: var(--sc-3); max-width: 30ch; }
+  .range-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sc-6) var(--sc-5); }
+  .range-item { display: flex; flex-direction: column; gap: var(--sc-3); }
+  .range-item__frame { position: relative; border-radius: var(--sc-r-md); overflow: hidden; background: #0b0a08; }
+  .range-item__frame img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block;
+    filter: saturate(0.82) brightness(0.94) contrast(1.08);
+  }
+  /* one uniform vignette + cool cast over every card, so two different photo
+     sources read as one shoot rather than being colour-matched frame by frame */
+  .range-item__frame::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(120% 100% at 50% 30%, transparent 45%, color-mix(in oklab, var(--sc-canvas) 55%, transparent) 100%),
+      linear-gradient(180deg, color-mix(in oklab, #0a1210 25%, transparent), transparent 35%);
+  }
+  .range-item h3 { font-family: var(--sc-font-text); font-size: var(--sc-t-sm); font-weight: 700; margin: 0; text-transform: none; }
+  .range-item p { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); margin: 0; }
+  .range-item__cart {
+    margin-top: var(--sc-1); align-self: flex-start;
+    font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: var(--sc-track-wide);
+    text-transform: uppercase; color: var(--sc-accent-ink); background: var(--sc-accent);
+    border: none; border-radius: var(--sc-r-sm); padding: 9px 14px; cursor: pointer;
+    transition: transform var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .range-item__cart:hover { transform: translateY(-1px); }
+  .range-item__cart:active { transform: scale(0.97); }
+  .range-item__cart:disabled { background: color-mix(in oklab, var(--sc-accent) 55%, var(--sc-surface)); cursor: default; }
+  @media (max-width: 860px) { .range-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* ---- close: colophon, bookended with the prologue's backdrop ---- */
+  /* :where() keeps this at zero specificity so it never outranks
+     .sc-stage's `position: sticky` on this same element (see
+     scrollcraft.css's own note on [data-sc-spotlight] for the same trap). */
+  :where(.close) { position: relative; }
+  .close {
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+    gap: var(--sc-5); padding: 0 var(--sc-gutter); height: 100%; overflow: hidden;
+    background: var(--sc-canvas) url('/05-close-poster.webp') center/cover no-repeat;
+  }
+  .close__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+  @media (prefers-reduced-motion: reduce) { .close__bg { display: none; } }
+  .close__scrim { position: absolute; inset: 0; background: linear-gradient(100deg,
+      color-mix(in oklab, var(--sc-canvas) 94%, transparent) 0%,
+      color-mix(in oklab, var(--sc-canvas) 84%, transparent) 46%,
+      color-mix(in oklab, var(--sc-canvas) 55%, transparent) 100%); }
+  /* below 860px the copy spans the full width, not just the lead column, so
+     the trailing end of the gradient needs to carry real density too */
+  @media (max-width: 860px) {
+    .close__bg { opacity: 0.3; }
+    .close__scrim { background: linear-gradient(180deg,
+        color-mix(in oklab, var(--sc-canvas) 90%, transparent) 0%,
+        color-mix(in oklab, var(--sc-canvas) 78%, transparent) 100%); }
+  }
+  .close__fade {
+    position: absolute; left: 0; right: 0; top: 0; height: min(22vh, 220px);
+    background: linear-gradient(to bottom, var(--sc-canvas), transparent);
+    pointer-events: none;
+  }
+  .close__inner { position: relative; z-index: 2; display: flex; flex-direction: column; gap: var(--sc-5); }
+  .close .sc-display { font-size: var(--sc-t-2xl); max-width: 20ch; }
+  .close__cta { font-size: var(--sc-t-lg); color: var(--sc-accent); text-decoration: underline; text-underline-offset: 0.22em; width: fit-content; }
+  .close__mark { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 2px; }
+  .close__mark strong { font-family: var(--sc-font-display); font-size: var(--sc-t-lg); font-weight: 400; text-transform: uppercase; letter-spacing: var(--sc-track-snug); }
+  .close__mark span { font-size: var(--sc-t-xs); color: var(--sc-ink-soft); }
+  .close__fine { position: absolute; right: var(--sc-gutter); bottom: var(--sc-5); z-index: 2; font-size: var(--sc-t-xs); color: var(--sc-ink-soft); }

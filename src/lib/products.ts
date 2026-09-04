@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 
+export { formatPrice } from "@/lib/format";
+
 export type Product = {
   id: string;
   slug: string;
@@ -31,10 +33,6 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
 
   if (error) throw error;
   return data;
-}
-
-export function formatPrice(cents: number): string {
-  return `$${(cents / 100).toFixed(0)}`;
 }
 
 // IDM-VTON only knows how to place a garment on a torso or legs — cap,
